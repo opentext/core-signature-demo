@@ -28,7 +28,7 @@ export default {
     ...mapState("auth", ["loginStatus"]),
     ...mapGetters("systemInfo", ["systemInfo"]),
     authTokenUrl() {
-      return `${this.systemInfo.authHost}/otdstenant/${this.systemInfo.tenant}/oauth2/token`;
+      return `${this.systemInfo.authHost}/tenants/${this.systemInfo.tenant}/oauth2/token`;
     }
   },
   methods: {
