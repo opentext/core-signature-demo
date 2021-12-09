@@ -20,7 +20,7 @@
         v-model="systemInfo.authHost"
         class="input-width"
         type="text"
-        placeholder="Enter your authentication host (e.g https://otdsauth.ot2.opentext.com)"
+        placeholder="Enter your authentication url (e.g https://auth.opentext.com)"
       />
       <label for="apiHost">Signature API Host</label>
       <input
@@ -30,13 +30,13 @@
         type="text"
         placeholder="Enter your api host (e.g  http://signature.demo:5000/"
       />
-      <label for="site">Site</label>
+      <label for="tenant">Tenant</label>
       <input
-        id="site"
-        v-model="systemInfo.site"
+        id="tenant"
+        v-model="systemInfo.tenant"
         class="input-width"
         type="text"
-        placeholder="Enter your site (e.g 1234-1234-1234-1234-1234)"
+        placeholder="Enter your tenant (e.g 1234-1234-1234-1234-1234)"
       />
       <label for="clientID">Client ID</label>
       <input
@@ -44,35 +44,36 @@
         v-model="systemInfo.clientID"
         class="input-width"
         type="text"
-        placeholder="Enter your site's client ID"
+        placeholder="Enter your tenant's client ID"
       />
-      <label for="ot2ClientSecret">Client Secret</label>
+      <label for="clientSecret">Client Secret</label>
       <input
-        id="ot2ClientSecret"
+        id="clientSecret"
         v-model="systemInfo.clientSecret"
         class="input-width"
         type="password"
-        placeholder="Enter your site's client secret"
+        placeholder="Enter your tenant's client secret"
       />
-      <label for="ot2Subscription">Subscription</label>
+      <label for="subscription" v-if="showSubscription">Subscription</label>
       <input
-        id="ot2Subscription"
+        id="subscription"
         v-model="systemInfo.subscription"
+        v-if="showSubscription"
         class="input-width"
         type="text"
         placeholder="Enter your subscription"
       />
-      <label for="ot2Username">Username</label>
+      <label for="username">Username</label>
       <input
-        id="ot2Username"
+        id="username"
         v-model="systemInfo.username"
         class="input-width"
         type="email"
         placeholder="Enter your username (e.g signer@opentext.com)"
       />
-      <label for="ot2Password">Password</label>
+      <label for="password">Password</label>
       <input
-        id="ot2Password"
+        id="password"
         v-model="systemInfo.password"
         class="input-width"
         type="password"
@@ -87,6 +88,9 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "SystemInfo",
+  props: {
+    showSubscription: { type: Boolean, default: true }
+  },
   computed: {
     ...mapGetters("systemInfo", ["systemInfo"])
   },
@@ -96,10 +100,12 @@ export default {
       const file = event.target.files[0];
       const fileAsJSON = await this.toJSON(file);
       const systemInfo = {};
-      systemInfo.site = fileAsJSON.site;
+      systemInfo.tenant = fileAsJSON.tenant;
       systemInfo.clientID = fileAsJSON.clientID;
       systemInfo.clientSecret = fileAsJSON.clientSecret;
-      systemInfo.subscription = fileAsJSON.subscription;
+      if (this.showSubscription === true){
+        systemInfo.subscription = fileAsJSON.subscription;
+      }
       systemInfo.username = fileAsJSON.username;
       systemInfo.password = fileAsJSON.password;
       systemInfo.authHost = fileAsJSON.authHost;
