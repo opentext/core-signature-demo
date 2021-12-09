@@ -1,4 +1,4 @@
-# OT2 Reference Application for Core Signature
+# Core Signature Reference Application
 This is a demo application which shows how you can build an application that leverages the Core Signature API to manage document signature flows. This is a lightweight frontend application built on the VueJS framework.
 
 ## Project Setup for the Frontend
@@ -34,13 +34,13 @@ To start the server run the following command from the root of the project while
 ## Example JSON credential file format:
 ```json
 {
-  "site": "your_site",
+  "tenant": "your_tenant",
   "clientID": "your_oauth_client_id",
   "clientSecret": "your_oauth_client_secret",
   "subscription": "subscription:coresignature-signingsite-123213",
   "username": "your_email@test.com",
   "password": "your_password",
-  "authHost": "https://otdsauth.ot2.opentext.com",
+  "authHost": "https://auth.opentext.com",
   "apiHost": " http://signature.demo:5000/,
 }
 ```
@@ -51,9 +51,9 @@ To start the server run the following command from the root of the project while
 
 Yes, the default host of `signature.demo` can be set to anything you'd like by modifying the `devServer.host` property in the `vue.config.js` file. You can confirm your changes have taken effect after running `npm run serve`.
 
-**Do I have to use a password grant for authentication with OT2?**
+**Do I have to use a password grant for authentication?**
 
-No, this demo application uses a password grant as an example. When using OT2 authentication directly with OTDS, all OAuth2 grant types are supported. A great resource on the ways you can obtain your access token [can be found here](https://developer.opentext.com/resources/documentation/Manage%20and%20Secure/0c60d99343c11b3025ce4f05adca3e59/page/6).
+No, this demo application uses a password grant as an example. When using authentication directly with the auth provider of your choice, all OAuth2 grant types are supported. A great resource on the ways you can obtain your access token [can be found here](https://developer.opentext.com/resources/documentation/Manage%20and%20Secure/0c60d99343c11b3025ce4f05adca3e59/page/6).
 
 **Is polling the only way I can retrieve the final document?**
 
@@ -61,7 +61,7 @@ No, we support several methods of document retrieval. You can use the `/document
 
 **Do I need to have a subscription to use Core Signature?**
 
-Yes, when authenticating with OT2 you will need to include the OT2 subscription provided to you on purchase when obtaining your access token.
+Yes, when authenticating with one of our supported auth providers you will need to include the subscription provided to you on purchase when obtaining your access token.
 
 **I'd really like to see an example of X. Will this app be augmented over time?**
 

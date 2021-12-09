@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="header-class">
-      Welcome to the OT2 Reference Application for Core Signature!
+      Welcome to the Core signature Reference Application!
     </h1>
     <br />
   </div>
