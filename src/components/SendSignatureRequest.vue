@@ -12,8 +12,14 @@
     <p v-if="attempted && !sendSucceeded" class="error">
       <strong>Sending failed: {{ sendErrorDescription }}</strong>
     </p>
-    <a v-if="sendSucceeded" :href="signingUrl" target="_blank"
+    <a
+      v-if='sendSucceeded && signingUrl'
+      :href="signingUrl"
+      target="_blank"
       >Click on the link to sign</a
+    >
+    <a v-if='sendSucceeded && prepareUrl' :href="prepareUrl" target="_blank"
+      >Click on the link to prepare the signature request</a
     >
   </div>
 </template>
@@ -28,7 +34,8 @@ export default {
       attempted: false,
       sendSucceeded: false,
       sendErrorDescription: "",
-      signingUrl: ""
+      signingUrl: undefined,
+      prepareUrl: undefined
     };
   },
   computed: {
@@ -46,6 +53,7 @@ export default {
         })
         .then(result => {
           this.signingUrl = result.body.signers[0].embed_url;
+          this.prepareUrl = result.body.prepare_url;
           this.attempted = true;
           this.sendSucceeded = true;
         })
