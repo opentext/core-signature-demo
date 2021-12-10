@@ -10,6 +10,8 @@
         type="text"
         placeholder="Enter comma-separated emails of signers in the desired signing order"
       />
+      <label for="prepare">Prepare signature request:</label>
+      <input id="prepare" v-model="isBeingPrepared" type="checkbox" />
     </div>
     <br />
     <SendSignatureRequest />
@@ -27,6 +29,7 @@ export default {
   },
   data() {
     return {
+      isBeingPrepared: false,
       signerEmails: [],
       timeoutHandle: () => {}
     };
@@ -36,6 +39,21 @@ export default {
   },
   watch: {
     signerEmails() {
+      this.updateRequestBody();
+    },
+    isBeingPrepared() {
+      this.updateRequestBody();
+    }
+  },
+  created() {
+    this.setCanSendSignatureRequest(false);
+  },
+  methods: {
+    ...mapMutations("signatureRequests", [
+      "setRequestBody",
+      "setCanSendSignatureRequest"
+    ]),
+    updateRequestBody() {
       const vueComponent = this;
       this.setCanSendSignatureRequest(false);
       clearTimeout(this.timeoutHandle);
@@ -51,21 +69,13 @@ export default {
         const requestBody = {
           document: vueComponent.documentURL,
           signers: signersArray,
-          who: "o"
+          who: "o",
+          is_being_prepared: vueComponent.isBeingPrepared
         };
         vueComponent.setRequestBody(requestBody);
-        vueComponent.setCanSendSignatureRequest(true);
+        vueComponent.setCanSendSignatureRequest(signersArray.length > 0);
       }, 1500);
     }
-  },
-  created() {
-    this.setCanSendSignatureRequest(false);
-  },
-  methods: {
-    ...mapMutations("signatureRequests", [
-      "setRequestBody",
-      "setCanSendSignatureRequest"
-    ])
   }
 };
 </script>

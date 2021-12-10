@@ -54,11 +54,11 @@
         type="password"
         placeholder="Enter your tenant's client secret"
       />
-      <label for="subscription" v-if="showSubscription">Subscription</label>
+      <label v-if="showSubscription" for="subscription">Subscription</label>
       <input
+        v-if="showSubscription"
         id="subscription"
         v-model="systemInfo.subscription"
-        v-if="showSubscription"
         class="input-width"
         type="text"
         placeholder="Enter your subscription"
@@ -103,7 +103,7 @@ export default {
       systemInfo.tenant = fileAsJSON.tenant;
       systemInfo.clientID = fileAsJSON.clientID;
       systemInfo.clientSecret = fileAsJSON.clientSecret;
-      if (this.showSubscription === true){
+      if (this.showSubscription === true) {
         systemInfo.subscription = fileAsJSON.subscription;
       }
       systemInfo.username = fileAsJSON.username;

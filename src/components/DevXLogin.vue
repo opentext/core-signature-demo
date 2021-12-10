@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SystemInfo :showSubscription="false"></SystemInfo>
+    <SystemInfo :show-subscription="false"></SystemInfo>
     <br />
     <button @click="loginToDevx">Login to Devx</button>
     <p v-if="loginStatus && loginStatus === 'success'" class="success">
